@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cillian Wang</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+    background: linear-gradient(120deg, #0f172a, #1e293b, #020617);
+    background-size: 300% 300%;
+    animation: gradientMove 12s ease infinite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+/* 🔥 外層包裝（你畫的那圈） */
+.card-wrapper {
+    position: relative;
+}
+
+/* 柔光外圈 */
+.card-wrapper::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+
+    border-radius: 40px;
+
+    background: radial-gradient(
+        circle,
+        rgba(56,189,248,0.35),
+        rgba(139,92,246,0.25),
+        transparent 70%
+    );
+
+    filter: blur(50px);
+
+    animation: aura 4s ease-in-out infinite;
+
+    z-index: -2;
+}
+
+/* 呼吸動畫 */
+@keyframes aura {
+    0% {opacity: 0.6; transform: scale(0.95);}
+    50% {opacity: 1; transform: scale(1.05);}
+    100% {opacity: 0.6; transform: scale(0.95);}
+}
+
+/* 七彩邊框 */
+.card-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 30px;
+
+    background: linear-gradient(
+        90deg,
+        #00f0ff,
+        #8b5cf6,
+        #ff2d95,
+        #00f0ff
+    );
+
+    background-size: 300% 300%;
+    animation: borderGlow 6s linear infinite;
+
+    z-index: -1;
+}
+
+@keyframes borderGlow {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+/* 🌈 卡片 */
+.card {
+    width: 720px;
+    padding: 40px;
+    border-radius: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    background: rgba(15,23,42,0.9);
+    backdrop-filter: blur(25px);
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* 頭像 */
+.avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+
+    background: url('me.jpg') center 30% / cover;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4),
+        0 0 20px rgba(56,189,248,0.4);
+
+    border: 2px solid rgba(255,255,255,0.2);
+
+    transition: transform 0.3s;
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+/* 內容 */
+.content {
+    flex: 1;
+}
+
+h1 {
+    color: #f8fafc;
+    margin: 0;
+}
+
+.subtitle {
+    color: #94a3b8;
+}
+
+.intro {
+    margin-top: 10px;
+    color: #cbd5f5;
+}
+
+/* 技能 */
+.skills span {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 12px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.1);
+}
+
+/* 按鈕 */
+.btn {
+    position: relative;
+    display: inline-block;
+    margin: 6px;
+    padding: 10px 20px;
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.08);
+    color: white;
+    text-decoration: none;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-4px) scale(1.08);
+
+    box-shadow:
+        0 0 15px rgba(56,189,248,0.7),
+        0 0 40px rgba(56,189,248,0.3);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* 光掃 */
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.5),
+        transparent
+    );
+
+    transition: 0.6s;
+}
+
+.btn:hover::before {
+    left: 120%;
+}
+
+/* 按鈕 ripple */
+.btn-ripple {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+
+    transform: translate(-50%, -50%);
+    animation: rippleBtn 0.6s ease-out;
+}
+
+@keyframes rippleBtn {
+    to {
+        width: 150px;
+        height: 150px;
+        opacity: 0;
+    }
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 20px;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card-wrapper">
+    <div class="card">
+        <div class="avatar"></div>
+
+        <div class="content">
+            <h1 id="typing"></h1>
+            <p class="subtitle">AI工程｜醫療影像｜INTJ</p>
+
+            <p class="intro">
+            專注於人工智慧與醫療影像，將電腦視覺應用於實際問題。
+            </p>
+
+            <div class="skills">
+                <span>AI</span>
+                <span>Computer Vision</span>
+                <span>YOLO</span>
+                <span>Python</span>
+            </div>
+
+            <div>
+                <a href="#" class="btn" onclick="openModal('github')">GitHub</a>
+                <a href="#" class="btn" onclick="openModal('email')">Email</a>
+                <a href="#" class="btn" onclick="openModal('ig')">Instagram</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content" id="modalContent"></div>
+</div>
+
+<script>
+/* 打字 */
+const text="王俊詠 (Cillian Wang)";
+let i=0;
+function typing(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typing,70);
+    }
+}
+typing();
+
+/* Modal */
+function openModal(type){
+    const modal=document.getElementById("modal");
+    const content=document.getElementById("modalContent");
+
+    if(type==="github"){
+        content.innerHTML="<h2>Projects</h2><p>YOLO + 機械手臂</p>";
+    }
+    if(type==="email"){
+        content.innerHTML="<h2>Email</h2><p>cillian@example.com</p>";
+    }
+    if(type==="ig"){
+        content.innerHTML="<h2>Instagram</h2><p>學習與生活分享</p>";
+    }
+
+    modal.style.display="flex";
+}
+
+function closeModal(e){
+    if(e.target.id==="modal"){
+        document.getElementById("modal").style.display="none";
+    }
+}
+
+/* 按鈕 ripple */
+document.querySelectorAll(".btn").forEach(btn=>{
+    btn.addEventListener("click",function(e){
+
+        const ripple=document.createElement("span");
+        ripple.className="btn-ripple";
+
+        const rect=btn.getBoundingClientRect();
+        ripple.style.left=(e.clientX-rect.left)+"px";
+        ripple.style.top=(e.clientY-rect.top)+"px";
+
+        btn.appendChild(ripple);
+
+        setTimeout(()=>ripple.remove(),600);
+    });
+});
+</script>
+
+</body>
+</html>
